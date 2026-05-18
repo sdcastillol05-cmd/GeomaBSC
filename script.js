@@ -126,14 +126,15 @@ async function cargarBSC() {
   const indicadorIds = indicadores.map(i => i.id);
   const { data: mediciones } = await db
     .from('mediciones')
-    .select('indicador_id, valor_real, fecha, nota')
+    .select('indicador_id, valor_real, fecha, nota, created_at')
     .in('indicador_id', indicadorIds)
-    .order('fecha', { ascending: false });
+    .order('created_at', { ascending: false });
 
-  // Agrupar última medición
+  // Agrupar última medición (la más reciente por created_at)
   const ultimaMedicion = {};
   mediciones.forEach(m => {
-    if (!ultimaMedicion[m.indicador_id]) {
+    if (!ultimaMedicion[m.indicador_id] ||
+        new Date(m.created_at) > new Date(ultimaMedicion[m.indicador_id].created_at)) {
       ultimaMedicion[m.indicador_id] = m;
     }
   });

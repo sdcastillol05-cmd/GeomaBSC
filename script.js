@@ -376,10 +376,19 @@ function renderRoadmap() {
     bar.className = `gantt-bar${ini.completada ? ' completada' : ''}`;
     bar.style.left = `${left}%`;
     bar.style.width = `${Math.max(width, 2)}%`;
-    bar.style.background = ini.completada
-      ? 'rgba(95,212,160,0.3)'
-      : FASE_COLORS[fase] || 'rgba(184,160,240,0.2)';
-    bar.style.borderLeft = `2px solid ${ini.completada ? 'var(--verde)' : 'rgba(184,160,240,0.5)'}`;
+
+    // Llenado progresivo según semana actual
+    const semFin = ini.semana_inicio + ini.semanas_duracion - 1;
+    const semActualClamp = Math.min(Math.max(semActual, ini.semana_inicio), semFin);
+    const pctLleno = ini.completada
+      ? 100
+      : ((semActualClamp - ini.semana_inicio) / ini.semanas_duracion) * 100;
+    const colorBase = ini.completada
+      ? '95,212,160'
+      : ({'1':'184,160,240','2':'95,212,160','3':'240,192,96','4':'240,112,112'}[fase] || '184,160,240');
+
+    bar.style.background = `linear-gradient(to right, rgba(${colorBase},0.65) 0%, rgba(${colorBase},0.65) ${pctLleno}%, rgba(${colorBase},0.15) ${pctLleno}%, rgba(${colorBase},0.15) 100%)`;
+    bar.style.borderLeft = `2px solid rgba(${colorBase}, 0.7)`;
 
     track.appendChild(bar);
 

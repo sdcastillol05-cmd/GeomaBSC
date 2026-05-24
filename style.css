@@ -840,7 +840,61 @@ body::before {
   text-align: center;
 }
 
-/* ---- ANIMATIONS ---- */
+/* ---- MODO CLARO ---- */
+body.light {
+  --bg: #f5f5fa;
+  --bg-card: #ffffff;
+  --bg-card-hover: #f0f0f8;
+  --bg-input: #ebebf5;
+  --border: #dcdcec;
+  --border-light: #c8c8e0;
+
+  --lila: #7c5cbf;
+  --lila-dim: #5a3fa0;
+  --lila-glow: rgba(124, 92, 191, 0.08);
+  --lila-deep: #ede8fa;
+
+  --text: #1a1a2e;
+  --text-dim: #4a4a6a;
+  --text-dimmer: #9090b0;
+
+  --shadow: 0 4px 24px rgba(0,0,0,0.08);
+  --shadow-lila: 0 0 32px rgba(124,92,191,0.06);
+}
+
+body.light::before {
+  background: radial-gradient(ellipse, rgba(124,92,191,0.04) 0%, transparent 70%);
+}
+
+body.light .header {
+  background: rgba(245,245,250,0.9);
+}
+
+body.light .roadmap-progress {
+  background: linear-gradient(90deg, var(--lila-dim), var(--lila));
+}
+
+/* ---- BOTÓN TOGGLE ---- */
+.theme-toggle {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+  font-size: 0.85rem;
+  color: var(--text-dim);
+  flex-shrink: 0;
+}
+.theme-toggle:hover { border-color: var(--lila-dim); color: var(--lila); }
+
+/* =============================================
+   ANIMACIONES
+   ============================================= */
 @keyframes fadeDown {
   from { opacity: 0; transform: translateY(-12px); }
   to   { opacity: 1; transform: translateY(0); }

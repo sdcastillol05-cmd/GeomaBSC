@@ -2,6 +2,19 @@
 // UQBAR · Dashboard BSC Geoma · script.js
 // =============================================
 
+// ---- TEMA CLARO / OSCURO ----
+const savedTheme = localStorage.getItem('uqbar-theme') || 'dark';
+if (savedTheme === 'light') {
+  document.body.classList.add('light');
+  document.getElementById('theme-icon').textContent = '☽';
+}
+
+document.getElementById('theme-toggle').addEventListener('click', () => {
+  const isLight = document.body.classList.toggle('light');
+  document.getElementById('theme-icon').textContent = isLight ? '☽' : '☀';
+  localStorage.setItem('uqbar-theme', isLight ? 'light' : 'dark');
+});
+
 // ---- CONFIGURACIÓN SUPABASE ----
 const SUPABASE_URL = 'https://jlhpptidvwjibysncdcy.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_v0gGjzywFYQpHASpZ5J0Gw_CYuA2_bY';
